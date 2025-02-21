@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include "linked_list.h"
+#include <chrono>
+#include <ctime>
 
 int main()
 {
@@ -20,6 +22,9 @@ int main()
     int counter = 0;
     int sum = 0;
 
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
+
     while(l != nullptr && counter < 10000000)
     {
         // std::cout << l->value << ", ";
@@ -27,6 +32,14 @@ int main()
         l = l->next;
         ++counter;
     }
+
+    end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+ 
+    std::cout << "finished computation at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
     std::cout << sum << std::endl;
     std::cout << "\nEnd\n";
