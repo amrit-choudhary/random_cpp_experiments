@@ -44,6 +44,14 @@ int main()
     std::cout << sum << std::endl;
     std::cout << "\nEnd\n";
 
+    UnionTest u_test;
+    u_test.iu = 5;
+    u_test.i = 4;
+    u_test.f = 5.0f;
+    u_test.b = false;
+
+    auto a = sizeof(u_test);
+
     char c;
     std::cin >> c;
 }
