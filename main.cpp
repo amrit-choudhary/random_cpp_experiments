@@ -4,53 +4,35 @@
 #include "linked_list.h"
 #include <chrono>
 #include <ctime>
+#include "async_match_gen.h"
 
 int main()
 {
-    TestFn();
-    LinkedList list1 = LinkedList(1);
-    LinkedList list2 = LinkedList(2);
-    list1.next = &list2;
-    LinkedList list3 = LinkedList(3);
-    list2.next = &list3;
-    LinkedList list4 = LinkedList(4);
-    list3.next = &list4;
+    auto start = std::chrono::high_resolution_clock::now();
 
-    list4.next = &list1;
+    std::random_device rdev1;
+    std::mt19937 rgen1(rdev1());
+    std::uniform_int_distribution<uint8_t> idist1(0, 9);
+    uint8_t result_type_lut1[10] = {0, 1, 1, 1, 2, 2, 2, 3, 4, 5};
 
-    LinkedList *l = &list1;
-    int counter = 0;
-    int sum = 0;
+    uint32_t result[6] = {0, 0, 0, 0, 0, 0};
 
-    std::chrono::time_point<std::chrono::system_clock> start, end;
-    start = std::chrono::system_clock::now();
-
-    while(l != nullptr && counter < 10000000)
+    for (int i = 0; i < 1000; i++)
     {
-        // std::cout << l->value << ", ";
-        sum += l->value;
-        l = l->next;
-        ++counter;
+        if (FindData(36, 11))
+        {
+            std::cout << "Count: " << i << std::endl;
+            break;
+        }
     }
 
-    end = std::chrono::system_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed_microseconds = end - start;
 
-    std::chrono::duration<double> elapsed_seconds = end - start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
- 
-    std::cout << "finished computation at " << std::ctime(&end_time)
-              << "elapsed time: " << elapsed_seconds.count() << "s\n";
+    std::cout << "elapsed time: " << elapsed_microseconds.count() / 1000 << " micros\n";
 
-    std::cout << sum << std::endl;
+    std::cout << "" << std::endl;
     std::cout << "\nEnd\n";
-
-    UnionTest u_test;
-    u_test.iu = 5;
-    u_test.i = 4;
-    u_test.f = 5.0f;
-    u_test.b = false;
-
-    auto a = sizeof(u_test);
 
     char c;
     std::cin >> c;
